@@ -16,11 +16,11 @@ matriz::matriz(){
 
 void matriz::print_matriz()
 {
-
+    int number=1;
   char letter=65;
   for(int i=0;i<=row;i++){
         if(i==0){
-            std::cout<<" ";
+            std::cout<<"   ";
         }
         else{
   std::cout<<letter<<"    ";
@@ -33,7 +33,10 @@ void matriz::print_matriz()
 
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < column; ++j) {
-
+        if(j==0){
+            std::cout<<number<<" ";
+            number++;
+        }
             std::cout <<"["<< board[i][j] <<"]"<<"  ";
         }
         std::cout <<std::endl;
@@ -41,6 +44,9 @@ void matriz::print_matriz()
     }
 
 }
+
+
+
 
 
     matriz::~matriz()
