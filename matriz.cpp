@@ -1,19 +1,20 @@
 #include "matriz.h"
 
 #include <iostream>
-
+//crea la matriz
 matriz::matriz(){
-
-
-    for (int i = 0; i < row; ++i) {
-
-        for (int j = 0; j < column; ++j) {
+    board= new char*[row];
+    for (int i = 0; i < row; i++) {
+        board[i] = new char[column];
+        for (int j = 0; j < column; j++) {
             board[i][j] = ' ';
         }
     }
 }
 
 
+
+// imprime la matriz
 void matriz::print_matriz()
 {
     int number=1;
@@ -48,9 +49,23 @@ void matriz::print_matriz()
 
 
 
-
+   //destruye la matriz dinamica
     matriz::~matriz()
 {
+    for (int i = 0; i < row; i++) {
+        delete[] board[i];
+    }
+    delete[] board;
 
     }
+    //modifica la matriz
+    void matriz::modify_matriz(char sign,int line,char col)
+    {
+    int line1=line-1;
+    int col1=static_cast<int>(col)-65;
+
+     board[line1][col1]=sign;
+
+    }
+
 

@@ -5,16 +5,15 @@
 class matriz
 {
 private:
-    static const int column = 8;
+    static const int column =8;
     static const int row =8;
-    char board[row][column];
+    char** board;
 
 public:
     matriz();
-    void print_matriz();
-    ~matriz();
-   void abc_row();
-   void num_column();
+   void print_matriz();
+   ~matriz();
+   void modify_matriz(char sign,int line,char col);
 };
 
 #endif // MATRIZ_H
