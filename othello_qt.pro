@@ -4,8 +4,13 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        board_functions.cpp \
         main.cpp \
-        matriz.cpp
+        matriz.cpp \
+        piece.cpp
 
 HEADERS += \
-    matriz.h
+    board_functions.h \
+    macros.h \
+    matriz.h \
+    piece.h
