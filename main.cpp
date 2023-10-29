@@ -7,9 +7,9 @@ int main()
     int line;
     char col;
     int flag=1;
-
-    while(true){
     matriz tablero;
+    while(true){
+
     tablero.print_matriz();
     std::cout<<"ingrese fila: ";
     std::cin>>line;
