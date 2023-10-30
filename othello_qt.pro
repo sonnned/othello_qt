@@ -7,10 +7,12 @@ SOURCES += \
         board_functions.cpp \
         main.cpp \
         matriz.cpp \
-        piece.cpp
+        piece.cpp \
+        utilities.cpp
 
 HEADERS += \
     board_functions.h \
     macros.h \
     matriz.h \
-    piece.h
+    piece.h \
+    utilities.h
