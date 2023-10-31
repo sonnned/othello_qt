@@ -13,7 +13,7 @@ public:
      * @param x_pos The row (x) position of the piece in the board
      * @param y_pos The column (y) position of the piece in the board
     */
-    Piece(char value, unsigned int x_pos, unsigned int y_pos): value(value), x_pos(x_pos), y_pos(y_pos) {
+    Piece(char value): value(value) {
         amount_of_pieces++;
     }
     /**
@@ -35,10 +35,17 @@ public:
      * @brief The number of pieces created so far
     */
     static int amount_of_pieces;
+
+
+    void setX_pos(unsigned int newX_pos);
+
+    void setY_pos(unsigned int newY_pos);
+
 private:
     char value; /**< The value of the piece */
-    unsigned int x_pos; /**< The row (x) position of the piece */
-    unsigned int y_pos; /**< The column (y) position of the piece */
+    unsigned int x_pos=0; /**< The row (x) position of the piece */
+    unsigned int y_pos=0; /**< The column (y) position of the piece */
+
 };
 
 #endif // PIECE_H

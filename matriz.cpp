@@ -2,6 +2,7 @@
 #include "macros.h"
 #include"utilities.h"
 #include <iostream>
+#include"piece.h"
 //crea la matriz
 matriz::matriz(){
     int mitad=row/2;
@@ -65,17 +66,34 @@ void matriz::print_matriz()
 
 
 
-   //destruye la matriz dinamica
+   //destructor
     matriz::~matriz()
 {
 }
-    //modifica la matriz
-    void matriz::modify_matriz(char sign)
+    void matriz::info_user_matriz(Piece gamer)
     {
+    /*
+     * retorno=vacio
+     * parametro=clase piece
+     * utiliza validator_input_row y col para crear la fila y la columna
+     * da esos valores a la clase con el metodo set
+     */
     int row=validator_input_row();
     int col=validator_input_col();
-    std::cout<<row<<std::endl;
-    board[row][col]=sign;
+    gamer.setX_pos(row);
+    gamer.setY_pos(col);
+    }
 
+    void matriz::modify_matriz(Piece gamer)
+    /*
+     * retorno=void
+     * parametro=piece
+     * agrega el signo a la matriz, utilizando los metodos get para obtener los atributos "x" y "y" de la clase piece
+     */
+    {
+    unsigned int x=gamer.getX_pos();
+    unsigned int y=gamer.getY_pos();
+    char sign= gamer.get_value();
+    board[x][y]=sign;
 
     }

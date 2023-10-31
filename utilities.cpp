@@ -3,8 +3,14 @@
 #include "macros.h"
 
 
-//valida que el numero de columna o fila esté dentro de la matriz, retorna un true si es cierto
+
 bool validator(int value)
+/*
+ * retorno=bool(variable validadora)
+ * parametros int(fila o columna)
+ * funcion que analiza el valor del numero ingresado, verificando que si esté dentro de las dimensiones de la matriz
+ */
+
 {
     bool flag;
     if(value<0 || value>BOARD_WEIGHT-1){
@@ -20,9 +26,14 @@ bool validator(int value)
 
 
 
-//pide las filas, y las valida, si no es una fila valida, la vuelve a pedir
-int validator_input_row(){
 
+int validator_input_row(){
+    /*retorno=int(fila validada)
+     * parametros=null
+     * funcion que se encarga de validar la entrada del usuario de la fila
+     * mira que la fila si esté en la matriz
+     *si la informacion pedida es erronea la vuelve a pedir
+     */
     while(true){
         int row;
         int row1;
@@ -33,7 +44,7 @@ int validator_input_row(){
         row1=row-1;
         flag=validator(row1);
         if(flag==false){
-           std::cout<<"informacion mala, ingrese una nueva letra "<<std::endl;
+           std::cout<<"informacion mala, ingrese un nuevo numero:  "<<std::endl;
         }
         else{
              return row1;
@@ -46,8 +57,15 @@ int validator_input_row(){
     }
 
 }
-//pide la columna y la valida, si no es una columna valida, la vuelve a pedir
+
 int validator_input_col(){
+    /*retorno=int(la columna validada)
+     *parametros=null
+     * funcion que se encarga de validar la entrada de usuario de la columna
+     * convierte el char recibido por un int, utilizando el ascii
+     * si la informacion pedida es erronea la vuelve a pedir
+     */
+
     char col;
     char col1;
     bool flag;

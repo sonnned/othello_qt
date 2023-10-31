@@ -1,6 +1,7 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
 #include<iostream>
+#include "piece.h"
 
 class matriz
 {
@@ -13,7 +14,8 @@ public:
     matriz();
    void print_matriz();
    ~matriz();
-   void modify_matriz(char sign);
+   void info_user_matriz(Piece gamer);
+   void modify_matriz(Piece gamer);
 
 };
 
