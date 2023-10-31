@@ -16,7 +16,7 @@ void print_board(char board[BOARD_HEIGHT][BOARD_WEIGHT]) {
     for (int i = 0; i < BOARD_WEIGHT; i++) {
         std::cout << BOARD_SPACING << char(i + 65);
     }
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
 
     for (int i = 0; i < BOARD_HEIGHT; i++) {
         for (int j = 0; j < BOARD_WEIGHT; j++) {

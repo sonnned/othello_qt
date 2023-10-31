@@ -1,80 +1,72 @@
 #include <iostream>
-#define BOARD_HEIGHT 8
-#define BOARD_WEIGHT 8
-#define BOARD_SPACING '\t'
-#define BOARD_EMPTY_SPACE ' '
-#define WHITE '*'
-#define BLACK '-'
+#include "matriz.h"
+#include "piece.h"
+#include "board_functions.h"
+using namespace std;
 
-class Piece
+bool is_valid_position(int x, int y)
 {
-public:
-    Piece(char value, unsigned int x_pos, unsigned int y_pos): value(value), x_pos(x_pos), y_pos(y_pos) {
-        amount_of_pieces++;
-    }
-    char get_value();
-    unsigned int getX_pos();
-    unsigned int getY_pos();
-    static int amount_of_pieces;
-private:
-    char value;
-    unsigned int x_pos;
-    unsigned int y_pos;
-};
-
-int Piece::amount_of_pieces = 0;
-
-char Piece::get_value() {
-    return value;
+    return x >= 0 && x < BOARD_HEIGHT && y >= 0 && y < BOARD_WEIGHT;
 }
 
-unsigned int Piece::getX_pos() {
-    return x_pos;
+bool is_empty_position(char board[BOARD_HEIGHT][BOARD_WEIGHT], int x, int y) {
+    return board[x][y] == BOARD_EMPTY_SPACE;
 }
 
-unsigned int Piece::getY_pos() {
-    return y_pos;
-}
-
-void fill_board_empty(char board[BOARD_HEIGHT][BOARD_WEIGHT]) {
-    for (int i = 0; i < BOARD_HEIGHT; i++) {
-        for (int j = 0; j < BOARD_WEIGHT; j++) {
-            board[i][j] = BOARD_EMPTY_SPACE;
+void fill_board_false(bool board[BOARD_HEIGHT][BOARD_WEIGHT])
+{
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
+        for (int j = 0; j < BOARD_WEIGHT; j++)
+        {
+            board[i][j] = false;
         }
     }
 }
 
-void fill_boar_with_piece(char board[BOARD_HEIGHT][BOARD_WEIGHT], Piece piece) {
-    board[piece.getX_pos()][piece.getY_pos()] = piece.get_value();
-}
-
-void print_board(char board[BOARD_HEIGHT][BOARD_WEIGHT]) {
-    for (int i = 0; i < BOARD_WEIGHT; i++) {
-        std::cout << BOARD_SPACING << char(i + 65);
-    }
-    std::cout << std::endl;
-
+void possible_movements(char board[BOARD_HEIGHT][BOARD_WEIGHT], char piece_value) {
+    int current_pos[2] = {-1, -1};
     for (int i = 0; i < BOARD_HEIGHT; i++) {
         for (int j = 0; j < BOARD_WEIGHT; j++) {
-            if (j == 0) {
-                std::cout << (i + 1) << BOARD_SPACING;
+            if (board[i][j] != BOARD_EMPTY_SPACE) {
+                current_pos[0] = i;
+                current_pos[1] = j;
+                std::cout << "--------" << std::endl;
+                std::cout << "X: " << current_pos[0] << " Y: " <<  current_pos[1] << std::endl;
+
+                for (int k = i - 1; k <= i + 1; k++) {
+                    for (int l = j - 1; l <= j + 1; l++) {
+                        //std::cout << k << ", " << l << std::endl;
+                        if (i == k && j == l) {
+                            continue;
+                        } else {
+                            //std::cout << "X: " << k << " Y: " <<  l << std::endl;
+                            if (board[k][l] != piece_value && board[k][l] != BOARD_EMPTY_SPACE) {
+                                std::cout << "X: " << k << " Y: " <<  l << std::endl;
+                            }
+                        }
+                    }
+                }
             }
-            std::cout << board[i][j] << BOARD_SPACING;
         }
-        std::cout << std::endl;
     }
 }
 
-int main() {
+int main()
+{
     char board[BOARD_HEIGHT][BOARD_WEIGHT];
     fill_board_empty(board);
-    Piece piece_1(WHITE, 1, 7);
-    Piece piece_2(BLACK, 7, 2);
-    Piece piece_3(WHITE, 4, 6);
+    Piece piece_1(BLACK, BOARD_HEIGHT / 2, BOARD_WEIGHT / 2 - 1);
+    Piece piece_2(BLACK, BOARD_HEIGHT / 2 - 1, BOARD_WEIGHT / 2);
+    Piece piece_3(WHITE, BOARD_HEIGHT / 2 - 1, BOARD_WEIGHT / 2 - 1);
+    Piece piece_4(WHITE, BOARD_HEIGHT / 2, BOARD_WEIGHT / 2);
     fill_boar_with_piece(board, piece_1);
     fill_boar_with_piece(board, piece_2);
     fill_boar_with_piece(board, piece_3);
+    fill_boar_with_piece(board, piece_4);
     print_board(board);
+
+    possible_movements(board, WHITE);
 
     return 0;
 }
