@@ -72,49 +72,10 @@ void matriz::print_matriz()
     //modifica la matriz
     void matriz::modify_matriz(char sign)
     {
-    int line;
-    char col;
-    bool val;
-    int col1;
-    int line1;
-    std::cout<<"ingrese el número de fila: ";
-            std::cin>>line;
-             line1=line-1;
-    while(true){
-        val=validator(line1);
-        if(val==true){
-            break;
-        }
-        else{
-            std::cout<<"ingrese un valor correcto: ";
-                    std::cin>>line;
-            line1=line-1;
-     }
-  }
-    std::cout<<"ingrese la columna: ";
-    std::cin>>col;
-    if (std::islower(col)) {
-     col = std::toupper(col);
-     col1=static_cast<int>(col)-65;
-    }
-    while(true){
-        val=validator(col1);
-        if(val==true){
-               break;
-        }
-        else{
-            std::cout<<"ingrese una letra correcta: ";
-            std::cin>>col;
-            col1=static_cast<int>(col)-65;
-        }
+    int row=validator_input_row();
+    int col=validator_input_col();
+    std::cout<<row<<std::endl;
+    board[row][col]=sign;
+
 
     }
-
-    board[line1][col1]=sign;
-    }
-
-
-
-
-
-

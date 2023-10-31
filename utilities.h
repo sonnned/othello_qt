@@ -6,3 +6,5 @@
 
 
 bool validator(int value);
+int validator_input_col();
+int validator_input_row();
