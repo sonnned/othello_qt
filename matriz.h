@@ -1,6 +1,7 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
 #include <iostream>
+#include <fstream>
 #include "macros.h"
 
 class matriz
@@ -79,6 +80,29 @@ public:
      * @return int que es las piezas actuales en juego
     */
     int getAmount_of_pieces();
+    /**
+     * @brief Función que obtiene la cantidad de piezas blancas actuales en juego
+     * @return int que es las piezas blancas actuales en juego
+    */
+    int getAmount_of_white_pieces();
+    /**
+     * @brief Función que obtiene la cantidad de piezas blancas actuales en juego
+     * @return int que es las piezas blancas actuales en juego
+    */
+    int getAmount_of_black_pieces();
+    /**
+     * @brief Función que guarda las estadísticas del juego
+    */
+    void save_stats();
+    /**
+     * @brief Función que imprime las estadísticas del juego
+    */
+    void print_stats();
+    /**
+     * @brief Función que nos dice la cantidad de juegos que se han jugado
+     * @return int que es la cantidad de juegos que se han jugado
+    */
+    int get_amount_of_games();
 };
 
 #endif // MATRIZ_H
