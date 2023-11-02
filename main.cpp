@@ -1,37 +1,29 @@
 #include <iostream>
 #include "matriz.h"
+#include "macros.h"
 using namespace std;
 
 int main()
 {
-    int line;
-    char col;
-    int flag=1;
-    matriz tablero;
-    while(true){
+    matriz board;
+    int current_piece = 1; // 1 -> White / 2 -> Black
 
-    tablero.print_matriz();
-    std::cout<<"ingrese fila: ";
-    std::cin>>line;
-    std::cout<<"ingrese columna: ";
-    std::cin>>col;
-    if (std::islower(col)) {
-        col = std::toupper(col);
+    while (true) {
+        board.print_matriz();
+
+        std::cout << "Turno de: " << (current_piece % 2 == 0 ? BLACK : WHITE) << std::endl;
+        int x;
+        int y;
+        std::cout << "Posicion X: ";
+        std::cin >> x;
+        std::cout << "Posicion Y: ";
+        std::cin >> y;
+
+        if (board.is_valid_move(x, y, current_piece % 2 == 0 ? BLACK : WHITE)) {
+            std::cout << "True" << std::endl;
+            current_piece++;
+        } else {
+            std::cout << "False" << std::endl;
+        }
     }
-    tablero.modify_matriz('*',line,col);
-    tablero.print_matriz();
-
-    std::cout<<std::endl<<"si o no";
-    std::cin>>flag;
-
-    if(flag==1){
-
-        break;
-    }
-
-}
-
-
-
-
 }
