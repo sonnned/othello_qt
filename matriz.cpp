@@ -1,71 +1,66 @@
 #include "matriz.h"
 
-#include <iostream>
-//crea la matriz
-matriz::matriz(){
-    board= new char*[row];
-    for (int i = 0; i < row; i++) {
-        board[i] = new char[column];
-        for (int j = 0; j < column; j++) {
-            board[i][j] = ' ';
+void matriz::init_board()
+{
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            board[i][j] = EMPTY;
         }
     }
+
+    board[BOARD_SIZE / 2][BOARD_SIZE / 2] = WHITE;
+    board[(BOARD_SIZE / 2) - 1][(BOARD_SIZE / 2) - 1] = WHITE;
+    board[(BOARD_SIZE / 2) - 1][BOARD_SIZE / 2] = BLACK;
+    board[BOARD_SIZE / 2][(BOARD_SIZE / 2) - 1] = BLACK;
 }
 
+bool matriz::is_valid_direction(int x, int y, char piece, int dir_x, int dir_y)
+{
+    int i = x + dir_x;
+    int j = y + dir_y;
 
+    if (is_valid_pos(i, j) || board[i][j] != (piece == BLACK ? WHITE : BLACK)) return false;
 
-// imprime la matriz
+    while (i >= 0 && i < BOARD_SIZE && j >= 0 && j < BOARD_SIZE) {
+        if (board[i][j] == EMPTY) return false;
+        if (board[i][j] == piece) return true;
+        i += dir_x;
+        y += dir_y;
+    }
+    return false;
+}
+
+bool matriz::is_valid_pos(int x, int y)
+{
+    return x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE;
+}
+
+bool matriz::is_valid_move(int x, int y, char piece)
+{
+    if (is_valid_pos(x, y) || board[x][y] != EMPTY) return false;
+
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            if (i == 0 && j == 0) continue;
+            if (is_valid_direction(x, y, piece, i, j)) return true;
+        }
+    }
+    return false;
+}
+
 void matriz::print_matriz()
 {
-    int number=1;
-  char letter=65;
-  for(int i=0;i<=row;i++){
-        if(i==0){
-            std::cout<<"   ";
-        }
-        else{
-  std::cout<<letter<<"    ";
-        letter++;
-        }
-  }
-  std::cout<<std::endl;
-
-
-
-    for (int i = 0; i < row; ++i) {
-        for (int j = 0; j < column; ++j) {
-        if(j==0){
-            std::cout<<number<<" ";
-            number++;
-        }
-            std::cout <<"["<< board[i][j] <<"]"<<"  ";
-        }
-        std::cout <<std::endl;
-        std::cout<<std::endl;
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        std::cout << SPACER << int(i + 0);
     }
+    std::cout << std::endl;
 
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if(j == 0) std::cout << (i + 0) << SPACER;
+            std::cout << "[" << board[i][j] << "]" << SPACER;
+        }
+        std::cout << std::endl << std::endl;
+    }
 }
-
-
-
-
-   //destruye la matriz dinamica
-    matriz::~matriz()
-{
-    for (int i = 0; i < row; i++) {
-        delete[] board[i];
-    }
-    delete[] board;
-
-    }
-    //modifica la matriz
-    void matriz::modify_matriz(char sign,int line,char col)
-    {
-    int line1=line-1;
-    int col1=static_cast<int>(col)-65;
-
-     board[line1][col1]=sign;
-
-    }
-
 
