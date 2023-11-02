@@ -25,7 +25,7 @@ bool matriz::is_valid_direction(int x, int y, char piece, int dir_x, int dir_y)
         if (board[i][j] == EMPTY) return false;
         if (board[i][j] == piece) return true;
         i += dir_x;
-        y += dir_y;
+        j += dir_y;
     }
     return false;
 }
