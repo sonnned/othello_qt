@@ -1,5 +1,10 @@
 #include "matriz.h"
 
+int matriz::getAmount_of_pieces()
+{
+    return amount_of_pieces;
+}
+
 void matriz::init_board()
 {
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -51,13 +56,13 @@ bool matriz::is_valid_move(int x, int y, char piece)
 void matriz::print_matriz()
 {
     for (int i = 0; i < BOARD_SIZE; i++) {
-        std::cout << SPACER << int(i + 0);
+        std::cout << SPACER << char(i + 65);
     }
     std::cout << std::endl;
 
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            if(j == 0) std::cout << (i + 0) << SPACER;
+            if(j == 0) std::cout << (i + 1) << SPACER;
             std::cout << "[" << board[i][j] << "]" << SPACER;
         }
         std::cout << std::endl << std::endl;
@@ -67,6 +72,7 @@ void matriz::print_matriz()
 void matriz::make_move(int x, int y, char piece)
 {
     board[x][y] = piece;
+    amount_of_pieces++;
 
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
