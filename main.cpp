@@ -20,10 +20,10 @@ int main()
         std::cin >> y;
 
         if (board.is_valid_move(x, y, current_piece % 2 == 0 ? BLACK : WHITE)) {
-            std::cout << "True" << std::endl;
+            board.make_move(x, y, current_piece % 2 == 0 ? BLACK : WHITE);
             current_piece++;
         } else {
-            std::cout << "False" << std::endl;
+            std::cout << "Movimiento invalido" << std::endl;
         }
     }
 }
