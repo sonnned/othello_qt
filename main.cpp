@@ -13,13 +13,18 @@ int main()
     std::cout << "Bienvenido a Othello" << std::endl;
     while(ban_menu) {
         std::cout << "1. Jugar" << std::endl;
-        std::cout << "2. Ver estadisticas" << std::endl;
-        std::cout << "3. Salir" << std::endl;
+        std::cout << "2. Empezar juego nuevo" << std::endl;
+        std::cout << "3. Ver estadisticas" << std::endl;
+        std::cout << "4. Salir" << std::endl;
         std::cout << "Opcion: ";
         int option_menu;
         std::cin >> option_menu;
 
         switch(option_menu) {
+            case 2: {
+                board.init_board();
+                current_piece = 1;
+            }
             case 1: {
                 ban = true;
                 while (ban) {
@@ -90,12 +95,12 @@ int main()
                 }
                 break;
             }
-            case 2: {
+            case 3: {
                 std::cout << std::endl;
                 board.print_stats();
                 break;
             }
-            case 3: {
+            case 4: {
                 ban_menu = false;
                 break;
             }
