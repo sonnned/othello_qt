@@ -17,15 +17,17 @@ int main()
         std::cout << "3. Ver estadisticas" << std::endl;
         std::cout << "4. Salir" << std::endl;
         std::cout << "Opcion: ";
-        int option_menu;
+        char option_menu;
         std::cin >> option_menu;
 
+
         switch(option_menu) {
-            case 2: {
+            case '2': {
                 board.init_board();
                 current_piece = 1;
+                break;
             }
-            case 1: {
+            case '1': {
                 ban = true;
                 while (ban) {
                     if (board.getAmount_of_pieces() == BOARD_SIZE * BOARD_SIZE) {
@@ -58,11 +60,12 @@ int main()
                     std::cout << "2. Pasar turno" << std::endl;
                     std::cout << "3. Salir" << std::endl;
                     std::cout << "Opcion: ";
-                    int option;
+                    char option;
                     std::cin >> option;
 
+
                     switch (option) {
-                        case 1: {
+                        case '1': {
                             int x;
                             char y;
                             std::cout << "Posicion X: ";
@@ -79,11 +82,11 @@ int main()
                             }
                             break;
                         }
-                        case 2: {
+                        case '2': {
                             current_piece++;
                             break;
                         }
-                        case 3: {
+                        case '3': {
                             ban = false;
                             break;
                         }
@@ -95,12 +98,12 @@ int main()
                 }
                 break;
             }
-            case 3: {
+            case '3': {
                 std::cout << std::endl;
                 board.print_stats();
                 break;
             }
-            case 4: {
+            case '4': {
                 ban_menu = false;
                 break;
             }
@@ -111,3 +114,4 @@ int main()
         }
     }
 }
+
