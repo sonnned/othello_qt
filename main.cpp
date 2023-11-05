@@ -16,11 +16,11 @@ int main()
         std::cout << "2. Empezar juego nuevo" << std::endl;
         std::cout << "3. Ver estadisticas" << std::endl;
         std::cout << "4. Salir" << std::endl;
-        std::cout << "Opcion: ";
+        std::cout << "Opcion: "<<std::endl;
         char option_menu;
         std::cin >> option_menu;
 
-
+      // if (option_menu >= '1' && option_menu <= '4') {
         switch(option_menu) {
             case '2': {
                 board.init_board();
@@ -96,8 +96,10 @@ int main()
                         }
                     }
                 }
+
                 break;
             }
+
             case '3': {
                 std::cout << std::endl;
                 board.print_stats();
@@ -115,3 +117,4 @@ int main()
     }
 }
 
+//}
