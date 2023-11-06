@@ -1,99 +1,190 @@
 #include "matriz.h"
-#include "macros.h"
-#include"utilities.h"
-#include <iostream>
-#include"piece.h"
-//crea la matriz
-matriz::matriz(){
-    int mitad=row/2;
-    for (int i = 0; i < row; i++) {   
-        for (int j = 0; j < column; j++) {
 
-           if(i==mitad-1 && j==mitad-1){
-                        board[i][j]=WHITE;
-                    }
-            else if(i==mitad-1 && j==mitad){
-                        board[i][j]=BLACK;
-                    }
-           else if(i==mitad && j==mitad-1){
-                        board[i][j]=BLACK;
-                    }
-           else if(i==mitad && j==mitad){
-                         board[i][j]=WHITE;
-                    }
+int matriz::getAmount_of_pieces()
+{
+    return amount_of_pieces + 4;
+}
 
-            else{
-            board[i][j] = ' ';
+void matriz::init_board()
+{
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            board[i][j] = EMPTY;
+        }
+    }
+
+    board[BOARD_SIZE / 2][BOARD_SIZE / 2] = WHITE;
+    board[(BOARD_SIZE / 2) - 1][(BOARD_SIZE / 2) - 1] = WHITE;
+    board[(BOARD_SIZE / 2) - 1][BOARD_SIZE / 2] = BLACK;
+    board[BOARD_SIZE / 2][(BOARD_SIZE / 2) - 1] = BLACK;
+}
+
+bool matriz::is_valid_direction(int x, int y, char piece, int dir_x, int dir_y)
+{
+    int i = x + dir_x;
+    int j = y + dir_y;
+
+    if (!is_valid_pos(i, j) || board[i][j] != (piece == BLACK ? WHITE : BLACK)) return false;
+
+    while (is_valid_pos(i, j)) {
+        if (board[i][j] == EMPTY) return false;
+        if (board[i][j] == piece) return true;
+        i += dir_x;
+        j += dir_y;
+    }
+    return false;
+}
+
+bool matriz::is_valid_pos(int x, int y)
+{
+    return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE;
+}
+
+bool matriz::is_valid_move(int x, int y, char piece)
+{
+    if (!is_valid_pos(x, y) || board[x][y] != EMPTY) return false;
+
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            if (i == 0 && j == 0) continue;
+            if (is_valid_direction(x, y, piece, i, j)) return true;
+        }
+    }
+    return false;
+}
+
+void matriz::print_matriz()
+{
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        std::cout << SPACER << char(i + 65);
+    }
+    std::cout << std::endl;
+
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if(j == 0) std::cout << (i + 1) << SPACER;
+            std::cout << "[" << board[i][j] << "]" << SPACER;
+        }
+        std::cout << std::endl << std::endl;
+    }
+}
+
+void matriz::make_move(int x, int y, char piece)
+{
+    board[x][y] = piece;
+    amount_of_pieces++;
+
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            if (i == 0 && j == 0) continue;
+            if (is_valid_direction(x, y, piece, i, j)) {
+                sandwich_movement(x, y, piece, i, j);
             }
         }
     }
 }
 
-
-
-// imprime la matriz
-void matriz::print_matriz()
+void matriz::sandwich_movement(int x, int y, char piece, int dir_x, int dir_y)
 {
-    int number=1;
-  char letter=65;
-  for(int i=0;i<=row;i++){
-        if(i==0){
-            std::cout<<"   ";
-        }
-        else{
-  std::cout<<letter<<"    ";
-        letter++;
-        }
-  }
-  std::cout<<std::endl;
+    int i = x + dir_x;
+    int j = y + dir_y;
 
-
-
-    for (int i = 0; i < row; ++i) {
-        for (int j = 0; j < column; ++j) {
-        if(j==0){
-            std::cout<<number<<" ";
-            number++;
+    while (is_valid_pos(x, y)) {
+        if (board[i][j] == piece) {
+            return;
         }
-            std::cout <<"["<< board[i][j] <<"]"<<"  ";
-        }
-        std::cout <<std::endl;
-        std::cout<<std::endl;
+        board[i][j] = piece;
+
+        i += dir_x;
+        j += dir_y;
     }
-
 }
 
+int matriz::getAmount_of_black_pieces() {
+    int black_pieces = 0;
 
-
-
-   //destructor
-    matriz::~matriz()
-{
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if (board[i][j] == BLACK) black_pieces++;
+        }
+    }
+    return black_pieces;
 }
-    void matriz::info_user_matriz(Piece gamer)
-    {
-    /*
-     * retorno=vacio
-     * parametro=clase piece
-     * utiliza validator_input_row y col para crear la fila y la columna
-     * da esos valores a la clase con el metodo set
-     */
-    int row=validator_input_row();
-    int col=validator_input_col();
-    gamer.setX_pos(row);
-    gamer.setY_pos(col);
+
+int matriz::getAmount_of_white_pieces() {
+    int white_pieces = 0;
+
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if (board[i][j] == WHITE) white_pieces++;
+        }
+    }
+    return white_pieces;
+}
+
+void matriz::save_stats() {
+    int amount_of_games = get_amount_of_games();
+    std::ofstream file;
+    file.open("database.txt", std::ios::app);
+
+    if (file.fail()) {
+        std::cout << "Error al abrir el archivo" << std::endl;
+        exit(1);
     }
 
-    void matriz::modify_matriz(Piece gamer)
-    /*
-     * retorno=void
-     * parametro=piece
-     * agrega el signo a la matriz, utilizando los metodos get para obtener los atributos "x" y "y" de la clase piece
-     */
-    {
-    unsigned int x=gamer.getX_pos();
-    unsigned int y=gamer.getY_pos();
-    char sign= gamer.get_value();
-    board[x][y]=sign;
+    file << "Partida: " << (amount_of_games + 1) << std::endl;
+    file << "Tamano del tablero: " << BOARD_SIZE << std::endl;
+    file << "Cantidad de piezas: " << getAmount_of_pieces() << std::endl;
+    file << "Cantidad de piezas blancas: " << getAmount_of_white_pieces() << std::endl;
+    file << "Cantidad de piezas negras: " << getAmount_of_black_pieces() << std::endl;
+    file << "-----------------------------" << std::endl;
 
+    file.close();
+}
+
+void matriz::print_stats() {
+    std::ifstream file;
+    file.open("database.txt", std::ios::in);
+
+    if (file.fail()) {
+        std::cout << "Error al abrir el archivo" << std::endl;
+        exit(1);
     }
+
+    char c;
+    while (!file.eof()) {
+        file.get(c);
+        std::cout << c;
+    }
+
+    file.close();
+}
+
+int matriz::get_amount_of_games() {
+    int amount_of_games = 0;
+    std::ifstream file;
+    file.open("database.txt", std::ios::in);
+
+    if (file.fail()) {
+        std::cout << "Error al abrir el archivo" << std::endl;
+        exit(1);
+    }
+
+    char c;
+    int count = 0;
+    while (!file.eof()) {
+        file.get(c);
+        if (c == "Partida"[count]) {
+            count++;
+            if (count == 7) {
+                amount_of_games++;
+                count = 0;
+            }
+        } else {
+            count = 0;
+        }
+    }
+
+    file.close();
+    return amount_of_games;
+}

@@ -1,10 +1,9 @@
 #ifndef MACROS_H
 #define MACROS_H
 
-#define BOARD_HEIGHT 8
-#define BOARD_WEIGHT 8
-#define BOARD_SPACING '\t'
-#define BOARD_EMPTY_SPACE ' '
+#define BOARD_SIZE 8
+#define SPACER '\t'
+#define EMPTY ' '
 #define WHITE '*'
 #define BLACK '-'
 
