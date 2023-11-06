@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include "matriz.h"
 #include "macros.h"
 //Para BOARD_SIZE = 4
