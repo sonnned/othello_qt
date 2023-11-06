@@ -62,7 +62,6 @@ int main()
                     std::cout << "Opcion: ";
                     char option;
                     std::cin >> option;
-
                     switch (option - '0') {
                         case 1: {
                             int x;
@@ -73,7 +72,7 @@ int main()
                             std::cin >> y;
 
                             if (board.is_valid_move(x - 1, int(std::toupper(y) - 65), current_piece % 2 == 0 ? BLACK : WHITE)) {
-                            board.make_move(x - 1, int(std::toupper(y) - 65), current_piece % 2 == 0 ? BLACK : WHITE);
+                                board.make_move(x - 1, int(std::toupper(y) - 65), current_piece % 2 == 0 ? BLACK : WHITE);
                                 current_piece++;
                             } else {
                                 std::cout << std::endl << "\tMovimiento invalido" << std::endl;
@@ -95,8 +94,10 @@ int main()
                         }
                     }
                 }
+
                 break;
             }
+
             case 3: {
                 std::cout << std::endl;
                 board.print_stats();
