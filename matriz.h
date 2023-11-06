@@ -103,6 +103,10 @@ public:
      * @return int que es la cantidad de juegos que se han jugado
     */
     int get_amount_of_games();
+    /**
+     * @brief Función que guarda el estado del juego
+     */
+    void save_game();
 };
 
 #endif // MATRIZ_H

@@ -9,6 +9,7 @@ int main()
     int current_piece = 1; // 1 -> White / 2 -> Black
     bool ban = true;
     bool ban_menu = true;
+    int is_draw = 0;
 
     std::cout << "Bienvenido a Othello" << std::endl;
     while(ban_menu) {
@@ -17,18 +18,19 @@ int main()
         std::cout << "3. Ver estadisticas" << std::endl;
         std::cout << "4. Salir" << std::endl;
         std::cout << "Opcion: ";
-        int option_menu;
+        char option_menu;
         std::cin >> option_menu;
 
-        switch(option_menu) {
+        switch(option_menu - '0') {
             case 2: {
                 board.init_board();
                 current_piece = 1;
+                is_draw = 0;
             }
             case 1: {
                 ban = true;
                 while (ban) {
-                    if (board.getAmount_of_pieces() == BOARD_SIZE * BOARD_SIZE) {
+                    if (board.getAmount_of_pieces() == BOARD_SIZE * BOARD_SIZE || is_draw == 2) {
                         std::cout << "El juego ha terminado" << std::endl;
                         if (board.getAmount_of_black_pieces() > board.getAmount_of_white_pieces()) {
                             std::cout << "Ganador: <" << BLACK << ">" << std::endl;
@@ -58,10 +60,10 @@ int main()
                     std::cout << "2. Pasar turno" << std::endl;
                     std::cout << "3. Salir" << std::endl;
                     std::cout << "Opcion: ";
-                    int option;
+                    char option;
                     std::cin >> option;
 
-                    switch (option) {
+                    switch (option - '0') {
                         case 1: {
                             int x;
                             char y;
@@ -70,7 +72,6 @@ int main()
                             std::cout << "Posicion Y: ";
                             std::cin >> y;
 
-                            std::cout << (x - 1) << " " << (int(std::toupper(y) - 65)) << std::endl;
                             if (board.is_valid_move(x - 1, int(std::toupper(y) - 65), current_piece % 2 == 0 ? BLACK : WHITE)) {
                             board.make_move(x - 1, int(std::toupper(y) - 65), current_piece % 2 == 0 ? BLACK : WHITE);
                                 current_piece++;
@@ -81,6 +82,7 @@ int main()
                         }
                         case 2: {
                             current_piece++;
+                            is_draw++;
                             break;
                         }
                         case 3: {
