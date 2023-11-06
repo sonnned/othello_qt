@@ -5,8 +5,10 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-        matriz.cpp
+        matriz.cpp \
+        piece.cpp \
 
 HEADERS += \
     macros.h \
-    matriz.h
+    matriz.h \
+    piece.h \
