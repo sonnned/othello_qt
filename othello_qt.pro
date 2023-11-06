@@ -6,9 +6,7 @@ CONFIG -= qt
 SOURCES += \
         main.cpp \
         matriz.cpp \
-        piece.cpp \
 
 HEADERS += \
     macros.h \
     matriz.h \
-    piece.h \
