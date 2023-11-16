@@ -8,7 +8,6 @@ class matriz
 {
 private:
     char board[BOARD_SIZE][BOARD_SIZE]; /**< Tablero del juego de tamaño nxn */
-    int amount_of_pieces = 0; /**< Es la cantidad de piezas que actualmente hay en el tablero */
 public:
     /**
      * @brief Constructor del tablero
@@ -75,38 +74,6 @@ public:
      * @return bool que indica si que el movimiento es correcto
     */
     void sandwich_movement(int x, int y, char piece, int dir_x, int dir_y);
-    /**
-     * @brief Función que obtiene la cantidad de piezas actuales en juego
-     * @return int que es las piezas actuales en juego
-    */
-    int getAmount_of_pieces();
-    /**
-     * @brief Función que obtiene la cantidad de piezas blancas actuales en juego
-     * @return int que es las piezas blancas actuales en juego
-    */
-    int getAmount_of_white_pieces();
-    /**
-     * @brief Función que obtiene la cantidad de piezas blancas actuales en juego
-     * @return int que es las piezas blancas actuales en juego
-    */
-    int getAmount_of_black_pieces();
-    /**
-     * @brief Función que guarda las estadísticas del juego
-    */
-    void save_stats();
-    /**
-     * @brief Función que imprime las estadísticas del juego
-    */
-    void print_stats();
-    /**
-     * @brief Función que nos dice la cantidad de juegos que se han jugado
-     * @return int que es la cantidad de juegos que se han jugado
-    */
-    int get_amount_of_games();
-    /**
-     * @brief Función que guarda el estado del juego
-     */
-    void save_game();
 };
 
 #endif // MATRIZ_H
