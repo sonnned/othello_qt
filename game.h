@@ -8,12 +8,7 @@ class Game
 {
 public:
     Game();
-private:
-    matriz board; /**< Tablero del juego */
-    Player white; /**< Jugador fichas blancas */
-    Player black; /**< Jugador fichas negras */
-    Player *currentPiece; /**< Ficha del turno actual */
-    bool gameOver = false; /**< Guarda el estado del juego */
+    ~Game();
     /**
      * @brief Función que inicia el juego y configura el proyecto
      * @return void
@@ -101,6 +96,12 @@ private:
      * @brief Función que guarda el estado del juego
      */
     void save_game();
+private:
+    matriz *board; /**< Tablero del juego */
+    Player *white; /**< Jugador fichas blancas */
+    Player *black; /**< Jugador fichas negras */
+    Player *currentPiece; /**< Ficha del turno actual */
+    bool gameOver = false; /**< Guarda el estado del juego */
 };
 
 #endif // GAME_H

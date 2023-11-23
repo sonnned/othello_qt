@@ -6,9 +6,6 @@ class Player
 {
 public:
     Player();
-private:
-    char piece; /**< Ficha del jugador */
-    int amountOfPieces = 0; /**< Cantidad de fichas del jugador */
     /**
      * @brief Función que obtiene la ficha del jugador
      * @return char
@@ -35,6 +32,9 @@ private:
      * @return void
     */
     void setPiece(char piece);
+private:
+    char piece; /**< Ficha del jugador */
+    int amountOfPieces = 0; /**< Cantidad de fichas del jugador */
 };
 
 #endif // PLAYER_H

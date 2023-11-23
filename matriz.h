@@ -1,5 +1,6 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
+
 #include <iostream>
 #include <fstream>
 #include "macros.h"
@@ -13,9 +14,7 @@ public:
      * @brief Constructor del tablero
      * Se encarga de llamar una función que rellena el tablero con valores vacíos
     */
-    matriz() {
-        init_board();
-    }
+    matriz();
     /**
      * @brief Función que rellena el tablero con un caracter específico
      * En nuestro caso <EMPTY>
