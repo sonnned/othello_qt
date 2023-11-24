@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "macros.h"
 #include "matriz.h"
 #include "player.h"
 
@@ -97,10 +98,10 @@ public:
      */
     void save_game();
 private:
-    matriz *board; /**< Tablero del juego */
-    Player *white; /**< Jugador fichas blancas */
-    Player *black; /**< Jugador fichas negras */
-    Player *currentPiece; /**< Ficha del turno actual */
+    matriz board; /**< Tablero del juego */
+    Player white; /**< Jugador fichas blancas */
+    Player black; /**< Jugador fichas negras */
+    char currentPiece; /**< Ficha del turno actual */
     bool gameOver = false; /**< Guarda el estado del juego */
 };
 

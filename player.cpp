@@ -5,6 +5,11 @@ Player::Player()
 
 }
 
+char Player::getPiece()
+{
+    return piece;
+}
+
 int Player::getAmountOfPieces()
 {
     return amountOfPieces;
