@@ -2,9 +2,18 @@
 
 Game::Game()
 {
+    std::ifstream checkFile("database.txt");
+    if (!checkFile) {
+        std::ofstream createFile("database.txt");
+        if (!createFile) {
+            std::cerr << "Error creating file" << std::endl;
+            exit(1);
+        }
+        createFile.close();
+    }
+    checkFile.close();
+
     matriz board;
-    Player white;
-    Player black;
 }
 
 Game::~Game()
@@ -14,31 +23,17 @@ Game::~Game()
 
 void Game::startGame()
 {
-
     board.init_board();
-    white.setPiece(WHITE);
-    black.setPiece(BLACK);
-    currentPiece = white.getPiece();
-}
-
-void Game::playTurn(Player &player)
-{
-
-}
-
-void Game::switchPlayer()
-{
-
 }
 
 bool Game::isValidMove(int x, int y, Player &player)
 {
-    return true;
+    return board.is_valid_move(x, y, player.getPiece());
 }
 
-void Game::makeMove(int x, int y, Player &player)
+void Game::makeMove(int x, int y, Player &player, Player &opponent)
 {
-
+    board.make_move(x, y, player, opponent);
 }
 
 void Game::displayBoard()
@@ -46,52 +41,78 @@ void Game::displayBoard()
     board.print_matriz();
 }
 
-bool Game::isGameOver()
+void Game::save_stats(int amountBlackPieces, int amountWhitePieces, char winner)
 {
-    return false;
-}
+    int amount_of_games = get_amount_of_games();
+    std::ofstream file;
+    file.open("database.txt", std::ios::app);
 
-void Game::getWinner()
-{
+    if (file.fail()) {
+        std::cout << "Error while open file" << std::endl;
+        exit(1);
+    }
 
-}
+    file << "Game: " << (amount_of_games + 1) << std::endl;
+    file << "Board size: " << BOARD_SIZE << std::endl;
+    file << "Amount of pieces: " << (amountBlackPieces + amountWhitePieces) << std::endl;
+    file << "White pieces: " << amountWhitePieces << std::endl;
+    file << "Black pieces: " << amountBlackPieces << std::endl;
+    file << "Winner: " << "( " << winner << " )" << std::endl;
+    file << "-----------------------------" << std::endl;
 
-void Game::resetGame()
-{
-
-}
-
-int Game::getAmount_of_pieces()
-{
-    return white.getAmountOfPieces() + black.getAmountOfPieces();
-}
-
-int Game::getAmount_of_white_pieces()
-{
-    return white.getAmountOfPieces();
-}
-
-int Game::getAmount_of_black_pieces()
-{
-    return black.getAmountOfPieces();
-}
-
-void Game::save_stats()
-{
-
+    file.close();
 }
 
 void Game::print_stats()
+{
+    std::ifstream file;
+    file.open("database.txt", std::ios::in);
+
+    if (file.fail()) {
+        std::cout << "Error while open file" << std::endl;
+        exit(1);
+    }
+
+    char c;
+    while (!file.eof()) {
+        file.get(c);
+        std::cout << c;
+    }
+
+    file.close();
+}
+
+void Game::save_game()
 {
 
 }
 
 int Game::get_amount_of_games()
 {
-    return 1;
-}
+    int amount_of_games = 0;
+    std::ifstream file;
+    file.open("database.txt", std::ios::in);
 
-void Game::save_game()
-{
+    if (file.fail()) {
+        std::cout << "Error while open file" << std::endl;
+        exit(1);
+    }
 
+    char c;
+    int count = 0;
+    while (!file.eof()) {
+        file.get(c);
+        if (c == "Game"[count]) {
+            count++;
+            if (count == 4) {
+                amount_of_games++;
+                count = 0;
+            }
+        } else {
+            count = 0;
+        }
+    }
+
+    file.close();
+    return amount_of_games;
 }

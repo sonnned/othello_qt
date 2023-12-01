@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "macros.h"
+#include "player.h"
 
 class matriz
 {
@@ -61,7 +62,7 @@ public:
      * @param y es la posición en las columnas
      * @param piece es la pieza actual que estamos usando, es decir, el jugador actual <WHITE, BLACK>
     */
-    void make_move(int x,int y, char piece);
+    void make_move(int x,int y, Player &player, Player &opponent);
     /**
      * @brief Función que realiza el encierro y cambia de color todas las piezas atrapadas
      * Va validando las posiciones y realizando el cambio
@@ -72,7 +73,7 @@ public:
      * @param dir_y es el iterador de la posición y, va desde y - 1 hasta y + 1 que son las adyacentes
      * @return bool que indica si que el movimiento es correcto
     */
-    void sandwich_movement(int x, int y, char piece, int dir_x, int dir_y);
+    void sandwich_movement(int x, int y, Player &piece, int dir_x, int dir_y, Player &opponent);
 };
 
 #endif // MATRIZ_H

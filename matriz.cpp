@@ -59,26 +59,29 @@ void matriz::print_matriz()
     }
 }
 
-void matriz::make_move(int x, int y, char piece)
+void matriz::make_move(int x, int y, Player &player, Player &opponent)
 {
-    board[x][y] = piece;
+    board[x][y] = player.getPiece();
+    player.increaseAmountOfPieces();
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
             if (i == 0 && j == 0) continue;
-            if (is_valid_direction(x, y, piece, i, j)) {
-                sandwich_movement(x, y, piece, i, j);
+            if (is_valid_direction(x, y, player.getPiece(), i, j)) {
+                sandwich_movement(x, y, player, i, j, opponent);
             }
         }
     }
 }
 
-void matriz::sandwich_movement(int x, int y, char piece, int dir_x, int dir_y)
+void matriz::sandwich_movement(int x, int y, Player &piece, int dir_x, int dir_y, Player &opponent)
 {
     int i = x + dir_x;
     int j = y + dir_y;
     while (is_valid_pos(x, y)) {
-        if (board[i][j] == piece) return;
-        board[i][j] = piece;
+        if (board[i][j] == piece.getPiece()) return;
+        board[i][j] = piece.getPiece();
+        opponent.decreaseAmountOfPieces();
+        piece.increaseAmountOfPieces();
         i += dir_x;
         j += dir_y;
     }

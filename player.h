@@ -32,9 +32,12 @@ public:
      * @return void
     */
     void setPiece(char piece);
+    void setAmountOfPiece(int i) {
+        amountOfPieces = i;
+    }
 private:
     char piece; /**< Ficha del jugador */
-    int amountOfPieces = 0; /**< Cantidad de fichas del jugador */
+    int amountOfPieces = 2; /**< Cantidad de fichas del jugador */
 };
 
 #endif // PLAYER_H

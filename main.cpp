@@ -14,6 +14,11 @@ int main()
     bool startMainMenu = true;
     int currentPlayer = 1;
     int isDraw = 0;
+    Player *white = new Player();
+    white->setPiece(WHITE);
+    Player *black = new Player();
+    black->setPiece(BLACK);
+    char winner = ' ';
     while(startMainMenu) {
         std::cout << "Welcome to Othello" << std::endl;
         std::cout << "1. Play" << std::endl;
@@ -24,25 +29,33 @@ int main()
         int mainMenuOption;
         if (std::cin >> mainMenuOption) {
             switch (mainMenuOption) {
+            case 2:
+                game.startGame();
+                currentPlayer = 1;
+                isDraw = 0;
+                white->setAmountOfPiece(2);
+                black->setAmountOfPiece(2);
             case 1 :
             {
                 game.startGame();
-                Player *white = new Player();
-                white->setPiece(WHITE);
-                Player *black = new Player();
-                black->setPiece(BLACK);
                 bool startInternalGame = true;
                 while (startInternalGame) {
-                    if (game.getAmount_of_pieces() == BOARD_SIZE * BOARD_SIZE || isDraw == 2) {
+                    if ((white->getAmountOfPieces() + black->getAmountOfPieces()) == BOARD_SIZE * BOARD_SIZE || isDraw == 2) {
                         std::cout << "--------Game over--------" << std::endl;
-                        if (game.getAmount_of_black_pieces() > game.getAmount_of_white_pieces()) std::cout << "Winner: " << "< " << BLACK << " >" << std::endl;
-                        else if (game.getAmount_of_black_pieces() < game.getAmount_of_white_pieces()) std::cout << "Winner: " << "< " << WHITE << " >" << std::endl;
+                        if (black->getAmountOfPieces() > white->getAmountOfPieces()) {
+                            std::cout << "Winner: " << "< " << black->getPiece() << " >" << std::endl;
+                            winner = white->getPiece();
+                        }
+                        else if (black->getAmountOfPieces() < white->getAmountOfPieces()) {
+                            std::cout << "Winner: " << "< " << white->getPiece() << " >" << std::endl;
+                            winner = black->getPiece();
+                        }
                         else std::cout << "Draw" << std::endl;
-                        std::cout << "Would u like to see the stats? (1/0): ";
+                        std::cout << "Would u like to save the stats? (1/0): ";
                         int option;
                         std::cin >> option;
                         if (option == 1) {
-                            game.save_stats();
+                            game.save_stats(black->getAmountOfPieces(), white->getAmountOfPieces(), winner);
                             startInternalGame = false;
                             break;
                         }
@@ -67,7 +80,7 @@ int main()
                             std::cout << "--------Position Y: ";
                             std::cin >> yPosition;
                             if (game.isValidMove(xPosition - 1, int(std::toupper(yPosition) - 65), (currentPlayer % 2 == 0 ? *black : *white))) {
-                                game.makeMove(xPosition - 1, int(std::toupper(yPosition) - 65), (currentPlayer % 2 == 0 ? *black : *white));
+                                game.makeMove(xPosition - 1, int(std::toupper(yPosition) - 65), (currentPlayer % 2 == 0 ? *black : *white), (currentPlayer % 2 == 0 ? *white : *black));
                                 currentPlayer++;
                             } else std::cout << "--------Invalid Movement--------" << std::endl;
                             break;
@@ -89,11 +102,6 @@ int main()
                 }
                 break;
             }
-            case 2:
-                game.startGame();
-                currentPlayer = 1;
-                isDraw = 0;
-                break;
             case 3:
                 std::cout << std::endl;
                 game.print_stats();
@@ -112,4 +120,7 @@ int main()
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');	// Descarta inputs malos < fuera de rango>
         }
     }
+
+    delete white;
+    delete black;
 }

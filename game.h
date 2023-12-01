@@ -5,6 +5,9 @@
 #include "matriz.h"
 #include "player.h"
 
+#include <iostream>
+#include <fstream>
+
 class Game
 {
 public:
@@ -15,17 +18,6 @@ public:
      * @return void
     */
     void startGame();
-    /**
-     * @brief Función que juega el turno del jugador
-     * @param player Jugador que juega el turno
-     * @return void
-    */
-    void playTurn(Player &player);
-    /**
-     * @brief Función que cambia el turno del jugador
-     * @return void
-    */
-    void switchPlayer();
     /**
      * @brief Función que valida si el movimiento es válido
      * @param x Posición en x
@@ -41,7 +33,7 @@ public:
      * @param player Jugador que juega el turno
      * @return void
     */
-    void makeMove(int x, int y, Player &player);
+    void makeMove(int x, int y, Player &player, Player &opponent);
     /**
      * @brief Función que valida si el movimiento es válido
      * @param x Posición en x
@@ -51,39 +43,9 @@ public:
     */
     void displayBoard();
     /**
-     * @brief Función que valida si el juego ha terminado
-     * @return bool
-    */
-    bool isGameOver();
-    /**
-     * @brief Función que imprime el ganador del juego
-     * @return bool
-    */
-    void getWinner();
-    /**
-     * @brief Función que reinicia el juego
-     * @return void
-    */
-    void resetGame();
-    /**
-     * @brief Función que obtiene la cantidad de piezas actuales en juego
-     * @return int que es las piezas actuales en juego
-    */
-    int getAmount_of_pieces();
-    /**
-     * @brief Función que obtiene la cantidad de piezas blancas actuales en juego
-     * @return int que es las piezas blancas actuales en juego
-    */
-    int getAmount_of_white_pieces();
-    /**
-     * @brief Función que obtiene la cantidad de piezas blancas actuales en juego
-     * @return int que es las piezas blancas actuales en juego
-    */
-    int getAmount_of_black_pieces();
-    /**
      * @brief Función que guarda las estadísticas del juego
     */
-    void save_stats();
+    void save_stats(int amountBlackPieces, int amountWhitePieces, char winner);
     /**
      * @brief Función que imprime las estadísticas del juego
     */
@@ -99,10 +61,6 @@ public:
     void save_game();
 private:
     matriz board; /**< Tablero del juego */
-    Player white; /**< Jugador fichas blancas */
-    Player black; /**< Jugador fichas negras */
-    char currentPiece; /**< Ficha del turno actual */
-    bool gameOver = false; /**< Guarda el estado del juego */
 };
 
 #endif // GAME_H
